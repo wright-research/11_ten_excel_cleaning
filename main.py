@@ -776,7 +776,7 @@ def main():
                 for row in range(104, 116):
                     ws.row_dimensions[row].height = 15
 
-            else:  # Team template
+            elif df.shape[0] == 80:  # Team template
 
                 template = 'Team'
                 templates_list.append(template)
@@ -1024,6 +1024,15 @@ def main():
                     else:
                         # Move to the next row
                         row += 1
+
+            else:  # Unrecognized template
+                st.error(
+                    f"**Unrecognized template.** The file '{uploaded_file.name}' has "
+                    f"{df.shape[0]} questions, but this app only supports files with "
+                    "38 (Review), 47 (No Leader), or 80 (Leader/Team) questions. "
+                    "Please check the file for blank rows in column A or other edits, "
+                    "and make sure it is the original, unmodified export.")
+                return
 
             # For the Leader and Team templates, there will be a 3rd order category
             if template == 'Leader' or template == 'Team':
